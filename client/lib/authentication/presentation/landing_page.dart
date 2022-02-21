@@ -11,7 +11,7 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 244, vertical: 60),
+        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,9 +58,12 @@ class LandingPage extends StatelessWidget {
               children: [
                 buildLeftPanel(context),
                 const Spacer(),
-                Lottie.asset(
-                  'assets/lottie/prevent_epidemic.json',
-                  frameRate: FrameRate(60),
+                SizedBox(
+                  height: 400,
+                  child: Lottie.asset(
+                    'assets/lottie/prevent_epidemic.json',
+                    frameRate: FrameRate(10),
+                  ),
                 ),
               ],
             ),
