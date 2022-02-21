@@ -59,7 +59,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 244, vertical: 60),
+        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -67,49 +67,55 @@ class _UserLoginPageState extends State<UserLoginPage> {
             const Spacer(),
             Row(
               children: [
-                Lottie.asset(
-                  'assets/lottie/getting_vaccinated.json',
-                  height: 512,
-                  width: 642,
+                Expanded(
+                  flex: 3,
+                  child: Lottie.asset(
+                    'assets/lottie/getting_vaccinated.json',
+                    // height: 512,
+                    // width: 642,
+                  ),
                 ),
                 const Spacer(),
-                Container(
-                  //height: isLogin ? 500 : 600,
-                  height: 600,
-                  width: 642,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  padding: EdgeInsets.all(16),
-                  child: BlocConsumer<UserAuthCubit, UserAuthState>(
-                    listener: (context, state) {
-                      if (state is UserAuthError) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(state.message),
-                          ),
-                        );
-                      }
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    //height: isLogin ? 500 : 600,
+                    height: 450,
+                    width: 500,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    padding: EdgeInsets.all(16),
+                    child: BlocConsumer<UserAuthCubit, UserAuthState>(
+                      listener: (context, state) {
+                        if (state is UserAuthError) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.message),
+                            ),
+                          );
+                        }
 
-                      if (state is UserAuthLoaded) {
-                        index == 2
-                            ? showLoginDialog(context)
-                            : handleApplicationRouting(
-                                state.user.userId, context);
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state is UserAuthInitial) {
+                        if (state is UserAuthLoaded) {
+                          index == 2
+                              ? showLoginDialog(context)
+                              : handleApplicationRouting(
+                                  state.user.userId, context);
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is UserAuthInitial) {
+                          return getWidget(index);
+                        }
+
+                        if (state is UserAuthLoading) {
+                          return LoadingWidget();
+                        }
+
                         return getWidget(index);
-                      }
-
-                      if (state is UserAuthLoading) {
-                        return LoadingWidget();
-                      }
-
-                      return getWidget(index);
-                    },
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -347,17 +353,18 @@ class _UserLoginPageState extends State<UserLoginPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 32),
+        const SizedBox(height: 10),
         Text(
           'Login',
           style: TextStyle(
-            fontSize: 64,
+            fontSize: 54,
             fontWeight: FontWeight.bold,
             height: 1.1,
             letterSpacing: -2.5,
           ),
         ),
-        const Spacer(),
+        // const Spacer(),
+        const SizedBox(height: 20),
         TextFormField(
           controller: _emailController,
           decoration: InputDecoration(
