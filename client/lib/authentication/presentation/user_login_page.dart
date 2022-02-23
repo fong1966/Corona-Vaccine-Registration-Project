@@ -29,17 +29,17 @@ class _UserLoginPageState extends State<UserLoginPage> {
 
   int index = 0;
 
-  getWidget(int state) {
+  Widget getWidget(int state) {
     switch (state) {
       case 0:
         return buildLoginColumn();
-        break;
+
       case 1:
         return buildNextColumn();
-        break;
+
       case 2:
         return buildSignupColumn();
-        break;
+
       default:
         return buildLoginColumn();
     }
@@ -58,70 +58,65 @@ class _UserLoginPageState extends State<UserLoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Header(),
-            const Spacer(),
-            Row(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 3,
+                Header(),
+                SizedBox(
+                  height: 5,
+                ),
+                SizedBox(
+                  height: 300,
+                  width: 400,
                   child: Lottie.asset(
                     'assets/lottie/getting_vaccinated.json',
-                    // height: 512,
-                    // width: 642,
                   ),
                 ),
-                const Spacer(),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    //height: isLogin ? 500 : 600,
-                    height: 450,
-                    width: 500,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    padding: EdgeInsets.all(16),
-                    child: BlocConsumer<UserAuthCubit, UserAuthState>(
-                      listener: (context, state) {
-                        if (state is UserAuthError) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(state.message),
-                            ),
-                          );
-                        }
+                Container(
+                  height: 500,
+                  width: 500,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  padding: EdgeInsets.all(16),
+                  child: BlocConsumer<UserAuthCubit, UserAuthState>(
+                    listener: (context, state) {
+                      if (state is UserAuthError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                          ),
+                        );
+                      }
 
-                        if (state is UserAuthLoaded) {
-                          index == 2
-                              ? showLoginDialog(context)
-                              : handleApplicationRouting(
-                                  state.user.userId, context);
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is UserAuthInitial) {
-                          return getWidget(index);
-                        }
-
-                        if (state is UserAuthLoading) {
-                          return LoadingWidget();
-                        }
-
+                      if (state is UserAuthLoaded) {
+                        index == 2
+                            ? showLoginDialog(context)
+                            : handleApplicationRouting(
+                                state.user.userId, context);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is UserAuthInitial) {
                         return getWidget(index);
-                      },
-                    ),
+                      }
+
+                      if (state is UserAuthLoading) {
+                        return LoadingWidget();
+                      }
+
+                      return getWidget(index);
+                    },
                   ),
                 ),
               ],
             ),
-            const Spacer(),
-          ],
+          ),
         ),
       ),
     );
@@ -264,20 +259,20 @@ class _UserLoginPageState extends State<UserLoginPage> {
   }
 
   buildNextColumn() {
+    print("123456789");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 32),
+        const SizedBox(height: 0),
         Text(
           'Signup',
           style: TextStyle(
-            fontSize: 64,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             height: 1.1,
-            letterSpacing: -2.5,
+            letterSpacing: 1.5,
           ),
         ),
-        const Spacer(),
         TextFormField(
           controller: _nameController,
           decoration: InputDecoration(
@@ -292,7 +287,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             ),
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 10),
         TextFormField(
           controller: _emailController,
           decoration: InputDecoration(
@@ -307,7 +302,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             ),
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 10),
         TextFormField(
           controller: _passwordController,
           decoration: InputDecoration(
@@ -322,7 +317,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             ),
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 0),
         AuthenticationButton(
           text: 'NEXT',
           onTap: () {
@@ -349,22 +344,21 @@ class _UserLoginPageState extends State<UserLoginPage> {
     );
   }
 
-  buildLoginColumn() {
+  Widget buildLoginColumn() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 10),
+        const SizedBox(height: 0),
         Text(
           'Login',
           style: TextStyle(
-            fontSize: 54,
+            fontSize: 35,
             fontWeight: FontWeight.bold,
             height: 1.1,
-            letterSpacing: -2.5,
+            letterSpacing: 1.5,
           ),
         ),
-        // const Spacer(),
-        const SizedBox(height: 20),
+        const SizedBox(height: 50),
         TextFormField(
           controller: _emailController,
           decoration: InputDecoration(
@@ -379,7 +373,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             ),
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 15),
         TextFormField(
           controller: _passwordController,
           decoration: InputDecoration(
@@ -394,7 +388,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             ),
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 15),
         AuthenticationButton(
           text: 'LOGIN',
           onTap: () {
@@ -404,7 +398,9 @@ class _UserLoginPageState extends State<UserLoginPage> {
                 );
           },
         ),
-        const Spacer(),
+        SizedBox(
+          height: 20,
+        ),
         Align(
           alignment: Alignment.center,
           child: HoverTextButton(
@@ -417,7 +413,6 @@ class _UserLoginPageState extends State<UserLoginPage> {
             fontSize: 16,
           ),
         ),
-        const SizedBox(height: 32),
       ],
     );
   }

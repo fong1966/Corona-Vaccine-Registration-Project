@@ -33,8 +33,8 @@ class App extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           accentColor: Color(0xFF0078E7),
-          canvasColor: Color(0xFFEEEEEE),
-          disabledColor: Color(0xFF8F909A),
+          // canvasColor: Color(0xFFEEEEEE),
+          // disabledColor: Color(0xFF8F909A),
           fontFamily: GoogleFonts.poppins().fontFamily,
         ),
         home: LandingPage(),

@@ -8,12 +8,12 @@ class Header extends StatelessWidget {
         BackButton(
           color: Theme.of(context).accentColor,
         ),
-        const SizedBox(width: 32),
+        const SizedBox(width: 0),
         Text(
           'Covid Vaccine Registration',
           style: TextStyle(
             color: Theme.of(context).accentColor,
-            fontSize: 26,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
